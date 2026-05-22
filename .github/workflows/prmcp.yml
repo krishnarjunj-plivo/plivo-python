@@ -37,10 +37,15 @@ jobs:
       - name: Run orchestrator
         run: python -m prmcp.run --target-repo "${{ vars.MCP_REPO }}"
 
-      - name: Verify trace artifact non-empty
+      - name: Verify trace records at least one opened PR
         run: |
           test -s "$PRMCP_TRACE_PATH"
           wc -l "$PRMCP_TRACE_PATH"
+          if ! grep -q '"action": "pr_opened"' "$PRMCP_TRACE_PATH"; then
+            echo "::error::trace contains no action=pr_opened row — pipeline ran but no PR was opened (likely auth/secret regression on AZURE_OPENAI_API_KEY)"
+            cat "$PRMCP_TRACE_PATH"
+            exit 1
+          fi
 
       - name: Upload trace
         if: always()
