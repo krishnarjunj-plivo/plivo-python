@@ -1,0 +1,48 @@
+name: prmcp
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+  workflow_dispatch: {}
+
+jobs:
+  auto-pr:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+      PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY_BACKUP: ${{ secrets.GEMINI_API_KEY_BACKUP }}
+      PRMCP_INJECT_429: '1'
+      PRMCP_TRACE_PATH: ${{ github.workspace }}/prmcp-trace.jsonl
+      PRMCP_SDK_ROOT: ${{ github.workspace }}
+      MCP_REPO: ${{ vars.MCP_REPO }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install prmcp
+        run: pip install "prmcp @ git+https://github.com/plivo-hackathon-26/krishnarjun-tusshar-atomic-token.git@main#subdirectory=prmcp"
+
+      - name: Run orchestrator
+        run: python -m prmcp.run --target-repo "${{ vars.MCP_REPO }}"
+
+      - name: Verify trace artifact non-empty
+        run: |
+          test -s "$PRMCP_TRACE_PATH"
+          wc -l "$PRMCP_TRACE_PATH"
+
+      - name: Upload trace
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prmcp-trace
+          path: ${{ env.PRMCP_TRACE_PATH }}
