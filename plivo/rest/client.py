@@ -19,6 +19,7 @@ from plivo.resources import (Accounts, Addresses, Applications, Calls, Token,
 from plivo.resources.live_calls import LiveCalls
 from plivo.resources.maskingsession import MaskingSessions
 from plivo.resources.transcription import Transcriptions
+from plivo.resources.transcripts import Transcripts
 from plivo.resources.verify_callerid import VerifyCallerids
 from plivo.resources.profile import Profile
 from plivo.resources.queued_calls import QueuedCalls
@@ -114,6 +115,7 @@ class Client(object):
         self.media = Media(self)
         self.pricing = Pricings(self)
         self.recordings = Recordings(self)
+        self.transcripts = Transcripts(self)
         self.addresses = Addresses(self)
         self.identities = Identities(self)
         self.call_feedback = CallFeedback(self)

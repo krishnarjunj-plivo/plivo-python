@@ -18,6 +18,7 @@ jobs:
       PRMCP_INJECT_429: '1'
       PRMCP_TRACE_PATH: ${{ github.workspace }}/prmcp-trace.jsonl
       PRMCP_SDK_ROOT: ${{ github.workspace }}
+      PRMCP_EXTRA_RESOURCES: transcripts
       MCP_REPO: ${{ vars.MCP_REPO }}
     steps:
       - uses: actions/checkout@v4
