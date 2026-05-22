@@ -31,7 +31,9 @@ jobs:
           cache: pip
 
       - name: Install prmcp
-        run: pip install "prmcp @ git+https://github.com/plivo-hackathon-26/krishnarjun-tusshar-atomic-token.git@main#subdirectory=prmcp"
+        run: |
+          git config --global url."https://x-access-token:${PAT_TOKEN}@github.com/".insteadOf "https://github.com/"
+          pip install "prmcp @ git+https://github.com/plivo-hackathon-26/krishnarjun-tusshar-atomic-token.git@main#subdirectory=prmcp"
 
       - name: Run orchestrator
         run: python -m prmcp.run --target-repo "${{ vars.MCP_REPO }}"
