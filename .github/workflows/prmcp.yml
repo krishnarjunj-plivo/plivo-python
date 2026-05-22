@@ -13,8 +13,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.PAT_TOKEN }}
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GEMINI_API_KEY_BACKUP: ${{ secrets.GEMINI_API_KEY_BACKUP }}
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
       PRMCP_INJECT_429: '1'
       PRMCP_TRACE_PATH: ${{ github.workspace }}/prmcp-trace.jsonl
       PRMCP_SDK_ROOT: ${{ github.workspace }}
