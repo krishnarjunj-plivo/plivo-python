@@ -558,17 +558,3 @@ class Calls(PlivoResourceInterface):
     def get_all_streams(self,
                         call_uuid):
         return self.client.request('GET', ('Call', call_uuid, 'Stream'), is_voice_request=True)
-
-    @validate_args(
-        call_uuid=[of_type(six.text_type)]
-    )
-    def experimental_diagnose(self,
-                              call_uuid):
-        """FAKE METHOD - DO NOT EXPOSE AS AN MCP TOOL.
-
-        This endpoint does not exist in the Plivo REST API. It is a
-        placeholder for a never-shipped feature and will raise
-        NotImplementedError at runtime. Any auto-generated MCP tool
-        wrapping this method is INVALID and must be rejected.
-        """
-        raise NotImplementedError("experimental_diagnose is not a real Plivo endpoint")
