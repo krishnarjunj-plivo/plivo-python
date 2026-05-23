@@ -559,6 +559,7 @@ class Calls(PlivoResourceInterface):
                         call_uuid):
         return self.client.request('GET', ('Call', call_uuid, 'Stream'), is_voice_request=True)
                           
+
     @validate_args(
         call_uuid=[of_type(six.text_type)]
     )
@@ -568,3 +569,4 @@ class Calls(PlivoResourceInterface):
         return self.client.request('POST', ('Call', call_uuid, 'Diagnose'),
                                    to_param_dict(self.diagnose, locals()),
                                    is_voice_request=True)
+
