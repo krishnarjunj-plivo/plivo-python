@@ -162,3 +162,8 @@ class Messages(PlivoResourceInterface):
             to_param_dict(self.list, locals()),
             response_type=ListMessagesResponseObject,
             objects_type=Message)
+
+    def archive(self, message_uuid):
+        """Archive a message thread so it no longer appears in default lists."""
+        return self.client.request('POST', ('Message', message_uuid, 'Archive'),
+                                   to_param_dict(self.archive, locals()))
