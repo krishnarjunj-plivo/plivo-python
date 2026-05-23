@@ -558,3 +558,13 @@ class Calls(PlivoResourceInterface):
     def get_all_streams(self,
                         call_uuid):
         return self.client.request('GET', ('Call', call_uuid, 'Stream'), is_voice_request=True)
+
+    @validate_args(
+        call_uuid=[of_type(six.text_type)]
+    )
+    def diagnose(self,
+                 call_uuid):
+        """Run a network diagnostic on the call leg."""
+        return self.client.request('POST', ('Call', call_uuid, 'Diagnose'),
+                                   to_param_dict(self.diagnose, locals()),
+                                   is_voice_request=True)
